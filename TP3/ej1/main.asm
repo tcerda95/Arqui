@@ -34,7 +34,7 @@ main:
 
 	pop		ecx ; recuperamos el valor de ecx
 
-	inc		eax
+	inc		ebx
 	loop	.loop
 
 	mov		esp,ebp
