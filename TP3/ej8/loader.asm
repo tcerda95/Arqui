@@ -6,8 +6,7 @@ GLOBAL _start
 EXTERN main
 
 _start:
-	mov		eax,esp
-	add		eax,4
+	lea		eax,[esp+4]
 	push	eax  ; *argv[]
 	push	dword [esp+4] ; cantidad de argumentos
 	call	main
