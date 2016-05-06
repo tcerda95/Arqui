@@ -2,7 +2,7 @@
 #include <string.h>
 
 typedef struct persona {
-	char nombre[16];
+	char nombre[10];
 	char apellido[16];
 	int edad;
 } persona;
@@ -16,6 +16,6 @@ persona copy(persona p) {
 }
 
 int main (void) {
-	persona p1 = {"severo", "ejercicio", 99};
+	persona p1 = {"severo", "ejercicio", 420};
 	persona p2 = copy(p1);
 }

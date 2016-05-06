@@ -15,40 +15,38 @@ copy:
 	sub	esp, 8
 	lea	eax, [ebp+12]
 	push	eax
-	lea	eax, [ebp-48]
+	lea	eax, [ebp-44]
 	push	eax
 	call	strcpy
 	add	esp, 16
 	sub	esp, 8
 	lea	eax, [ebp+12]
-	add	eax, 16
+	add	eax, 10
 	push	eax
-	lea	eax, [ebp-48]
-	add	eax, 16
+	lea	eax, [ebp-44]
+	add	eax, 10
 	push	eax
 	call	strcpy
 	add	esp, 16
-	mov	eax, DWORD PTR [ebp+44]
+	mov	eax, DWORD PTR [ebp+40]
 	mov	DWORD PTR [ebp-16], eax
 	mov	eax, DWORD PTR [ebp-60]
-	mov	edx, DWORD PTR [ebp-48]
-	mov	DWORD PTR [eax], edx
 	mov	edx, DWORD PTR [ebp-44]
-	mov	DWORD PTR [eax+4], edx
+	mov	DWORD PTR [eax], edx
 	mov	edx, DWORD PTR [ebp-40]
-	mov	DWORD PTR [eax+8], edx
+	mov	DWORD PTR [eax+4], edx
 	mov	edx, DWORD PTR [ebp-36]
-	mov	DWORD PTR [eax+12], edx
+	mov	DWORD PTR [eax+8], edx
 	mov	edx, DWORD PTR [ebp-32]
-	mov	DWORD PTR [eax+16], edx
+	mov	DWORD PTR [eax+12], edx
 	mov	edx, DWORD PTR [ebp-28]
-	mov	DWORD PTR [eax+20], edx
+	mov	DWORD PTR [eax+16], edx
 	mov	edx, DWORD PTR [ebp-24]
-	mov	DWORD PTR [eax+24], edx
+	mov	DWORD PTR [eax+20], edx
 	mov	edx, DWORD PTR [ebp-20]
-	mov	DWORD PTR [eax+28], edx
+	mov	DWORD PTR [eax+24], edx
 	mov	edx, DWORD PTR [ebp-16]
-	mov	DWORD PTR [eax+32], edx
+	mov	DWORD PTR [eax+28], edx
 	mov	eax, DWORD PTR [ebp-60]
 	mov	ecx, DWORD PTR [ebp-12]
 	xor	ecx, DWORD PTR gs:20
@@ -71,17 +69,17 @@ main:
 	mov	eax, DWORD PTR gs:20
 	mov	DWORD PTR [ebp-12], eax
 	xor	eax, eax
-	mov	DWORD PTR [ebp-84], 1702258035
-	mov	DWORD PTR [ebp-80], 28530
-	mov	DWORD PTR [ebp-76], 0
-	mov	DWORD PTR [ebp-72], 0
-	mov	DWORD PTR [ebp-68], 1919248997
-	mov	DWORD PTR [ebp-64], 1768122723
-	mov	DWORD PTR [ebp-60], 111
-	mov	DWORD PTR [ebp-56], 0
-	mov	DWORD PTR [ebp-52], 99
-	lea	eax, [ebp-48]
-	sub	esp, 8
+	mov	DWORD PTR [ebp-76], 1702258035
+	mov	DWORD PTR [ebp-72], 28530
+	mov	WORD PTR [ebp-68], 0
+	mov	DWORD PTR [ebp-66], 1919248997
+	mov	DWORD PTR [ebp-62], 1768122723
+	mov	DWORD PTR [ebp-58], 111
+	mov	DWORD PTR [ebp-54], 0
+	mov	DWORD PTR [ebp-48], 420
+	lea	eax, [ebp-44]
+	sub	esp, 12
+	push	DWORD PTR [ebp-48]
 	push	DWORD PTR [ebp-52]
 	push	DWORD PTR [ebp-56]
 	push	DWORD PTR [ebp-60]
@@ -89,8 +87,6 @@ main:
 	push	DWORD PTR [ebp-68]
 	push	DWORD PTR [ebp-72]
 	push	DWORD PTR [ebp-76]
-	push	DWORD PTR [ebp-80]
-	push	DWORD PTR [ebp-84]
 	push	eax
 	call	copy
 	add	esp, 44
