@@ -1,7 +1,5 @@
-#define HEIGHT 25
-#define WIDTH 80
 
-
+char get_key();
 
 unsigned int seconds();
 unsigned int minutes();
@@ -33,6 +31,7 @@ void kmain()
 	unsigned int mins = minutes();
 	unsigned int hrs = hour();
 	unsigned int secs = seconds();
+	int i = 0;
 
 	clear();
 	print(msg, leng, 0xF2, 0, 0);
@@ -52,6 +51,8 @@ void kmain()
 	print_num(month(), 0x0F, 6, 6);
 
 	while(1){
+	    clear();
+	    print_num(get_key(),0x0F, 0, 0);
 	}
 }
 
