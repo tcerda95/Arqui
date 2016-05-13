@@ -1,5 +1,7 @@
+#define COLS 80
 
-char get_key();
+int get_char();
+void editor_mode();
 
 unsigned int seconds();
 unsigned int minutes();
@@ -7,6 +9,8 @@ unsigned int hour();
 unsigned int month();
 
 int str_len(char *str);
+
+void print_str(char *str, char color, int row, int col);
 void print_num(int num, char color, int row, int col);
 void print(char *str, int len, char color, int row, int col);
 void clear();
@@ -32,27 +36,30 @@ void kmain()
 	unsigned int hrs = hour();
 	unsigned int secs = seconds();
 	int i = 0;
+	char c;
 
 	clear();
-	print(msg, leng, 0xF2, 0, 0);
-	print(other_msg, str_len(other_msg), 0x0F, 2, 20);
+	print_str(msg, 0xF2, 0, 0);
+	print_str(other_msg,  0x0F, 2, 20);
 	print_num(-2345, 0x0F, 2, 0);
 
-	print("Horas:", 6, 0x0F, 3, 0);
+	print_str("Horas:", 0x0F, 3, 0);
 	print_num(hrs, 0x0F, 3, 8);
 
-	print("Mins:", 5, 0x0F, 4, 0);
+	print_str("Mins:", 0x0F, 4, 0);
 	print_num(mins, 0x0F, 4, 7);
 
-	print("Segundos:", 9, 0x0F, 5, 0);
+	print_str("Segundos:", 0x0F, 5, 0);
 	print_num(secs, 0x0F, 5, 11);
 
-	print("Mes:", 4, 0x0F, 6, 0);
+	print_str("Mes:", 0x0F, 6, 0);
 	print_num(month(), 0x0F, 6, 6);
 
-	while(1){
-	    clear();
-	    print_num(get_key(),0x0F, 0, 0);
+	clear();
+	while(1) {
+		if ((c = get_char()) != -1) {
+			print_char(c, 0x0F, i/COLS, i%COLS);
+			i++;
+		}
 	}
 }
-

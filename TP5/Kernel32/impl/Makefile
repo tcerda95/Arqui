@@ -9,8 +9,9 @@ all:
 	gcc $(FLAGS) kernel.c -o kernel.o $(DIRECTIVES) 
 	gcc $(FLAGS) video_driver.c -o video_driver.o $(DIRECTIVES) 
 	gcc $(FLAGS) strings.c -o strings.o $(DIRECTIVES) 
+	gcc $(FLAGS) keyboard_driver.c -o keyboard_driver.o $(DIRECTIVES) 
 	
-	ld -melf_i386 -T link.ld -o kernel.bin loader.o kernel.o rtc.o video_driver.o strings.o keys.o
+	ld -melf_i386 -T link.ld -o kernel.bin loader.o kernel.o rtc.o video_driver.o strings.o keys.o keyboard_driver.o
 	rm *.o
 	mcopy kernel.bin z:/boot -o
 clean:

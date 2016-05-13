@@ -3,11 +3,13 @@
 
 #define MAX_DIGITS 15
 
-char *video = (char *) 0xB8000;
+static char *video = (char *) 0xB8000;
 
 static unsigned int count_digits(int num);
 
 int str_len(char *str);
+void print_str(char *str, char color, int row, int col);
+void print_char(char c, char color, int row, int col);
 void print_num(int num, char color, int row, int col);
 void print(char *str, int len, char color, int row, int col);
 void clear();
@@ -19,6 +21,20 @@ static unsigned int count_digits(int num) {
 	while ((num /= 10) > 0)
 		digits++;
 	return digits;
+}
+
+void print_str(char *str, char color, int row, int col) {
+	int effective_pos = (WIDTH*row + col)*2; /* duplica debido a los colores */
+	int i = effective_pos;
+	while (*str != '\0') {
+		video[i] = *str++;
+		video[i+1] = color;
+		i += 2;
+	}
+}
+
+void print_char(char c, char color, int row, int col) {
+	print(&c, 1, color, row, col);
 }
 
 void print_num(int num, char color, int row, int col) {
