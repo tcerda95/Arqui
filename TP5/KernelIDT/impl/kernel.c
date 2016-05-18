@@ -2,7 +2,7 @@
 #include "defs.h"
 #include "arch/handlers.h"
 
-DESCR_INT idt[0xA];	// IDT de 11 entradas
+DESCR_INT idt[0xA];	// IDT de 10 entradas
 IDTR idtr;			// IDTR
 
 void setup_IDT_entry (int index, byte selector, dword offset, byte access);
@@ -16,17 +16,18 @@ int kmain()
 {
 
 	setup_IDT_entry (0x08, 0x08, (dword)&_irq00Handler, ACS_INT);
+	setup_IDT_entry (0x09, 0x08, (dword)&_irq01Handler, ACS_INT);
 
 
-	idtr.base = 0;  
-	idtr.base +=(dword) &idt;
+	idtr.base = 0;
+	idtr.base += (dword) &idt;
 	idtr.limit = sizeof(idt)-1;
 	
 	_lidt (&idtr);	
 
 
-	//Todas las interrupciones desabilidas.
-	picMasterMask(0xFE); 
+	//Todas las interrupciones deshabilitadas.
+	picMasterMask(0xFC);
 	picSlaveMask(0xFF);
         
 	_sti();

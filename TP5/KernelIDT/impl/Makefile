@@ -5,11 +5,12 @@ FLAGS = -g -m32 -c
 all:
 	nasm -f aout -g loader.asm -o loader.o 
 	nasm -f aout -g asm/interrupts.asm -o asm_interrupts.o
+	nasm -f aout -g arch/keys.asm -o keys.o
 
 	gcc $(FLAGS) arch/handlers.c -o arch_hanlders.o $(DIRECTIVES)
 	gcc $(FLAGS) kernel.c -o kernel.o $(DIRECTIVES) 
 	
-	ld -melf_i386 -T link.ld -o kernel.bin loader.o kernel.o asm_interrupts.o arch_hanlders.o 
+	ld -melf_i386 -T link.ld -o kernel.bin keys.o loader.o kernel.o asm_interrupts.o arch_hanlders.o 
 	rm *.o
 	mcopy kernel.bin y:/boot -o
 clean:
