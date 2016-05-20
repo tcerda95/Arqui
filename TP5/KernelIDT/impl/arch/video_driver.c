@@ -2,6 +2,9 @@
 #include "arch/strings.h"
 #define MAX_DIGITS 15
 
+#define ROW(p) ((p)/WIDTH)
+#define COL(p) ((p)%WIDTH)
+
 static char *video = (char *) 0xB8000;
 static char color = DEFAULT_COLOR;
 static int cursor = 0; /* solo para put_char por ahora */
@@ -26,7 +29,7 @@ void set_color(char c) {
 	color = c;
 }
 
-void print_str(char *str, int row, int col) {
+void print_str(const char *str, int row, int col) {
 	int backup = cursor;
 	cursor = row * WIDTH + col;
 	while (*str != '\0')
@@ -35,25 +38,35 @@ void print_str(char *str, int row, int col) {
 }
 
 void print_char(char c, int row, int col) {
-	print(&c, 1, row, col);
+	if (valid_pos(row, col)) {
+		int position = (WIDTH*row + col)*2; /* duplica debido a los colores */
+		video[position] = c;
+		video[position+1] = color;
+	}
 }
+
+void put(const char *str, int len) {
+	int i;
+	for (i = 0; i < len; i++)
+		put_char(str[i]);
+}
+
 
 void put_char(char c) {
 	if (c == '\b') {
 		cursor--;
-		print_char(' ', cursor / WIDTH, cursor % WIDTH);
+		print_char(' ', ROW(cursor), COL(cursor));
 	}
 	else if (c == '\n') {
-		cursor += WIDTH - (cursor % WIDTH); /* cursor al comienzo de nueva linea */
+		cursor += WIDTH - COL(cursor); /* cursor al comienzo de nueva linea */
 	}
 	else if (c == '\t') { /* reset cursor */
 		cursor = 0;
 	}
 	else {
-		print_char(c, cursor / WIDTH, cursor % WIDTH);
+		print_char(c, ROW(cursor), COL(cursor));
 		cursor++;
 	}
-
 }
 
 void print_num(int num, int row, int col) {
@@ -77,23 +90,21 @@ void print_num(int num, int row, int col) {
 	print(str, digits, row, col);
 }
 
-void print(char *str, int len, int row, int col) {
+void print(const char *str, int len, int row, int col) {
 	if (valid_pos(row, col)) {
-		int effective_pos = (WIDTH*row + col)*2; /* duplica debido a los colores */
-		int effective_len = len*2;
 		int i;
-		for (i = effective_pos; i < effective_len+effective_pos; i += 2) {
-			video[i] = *str++;
-			video[i+1] = color;
-		}
+		int pos = row * WIDTH + col;
+		for (i = 0; i < len && valid_pos(ROW(pos), COL(pos)); i++, pos++)
+			print_char(str[i], ROW(pos), COL(pos));
 	}
 }
 
 void clear() {
 	int i = 0;
-	for (i = 0; i < WIDTH*HEIGHT*2; i += 2) {
-		video[i] = ' ';
-		video[i+1] = CLEAR_COLOR;
-	}
+	char backup = color;
+	set_color(CLEAR_COLOR);
+	for (i = 0; i < WIDTH*HEIGHT; i ++)
+		print_char(' ',ROW(i), COL(i));
+	set_color(backup);
 	cursor = 0;
 }

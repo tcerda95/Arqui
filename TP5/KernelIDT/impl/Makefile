@@ -12,8 +12,9 @@ all:
 	gcc $(FLAGS) arch/keyboard_driver.c -o keyboard_driver.o $(DIRECTIVES)
 	gcc $(FLAGS) arch/video_driver.c -o video_driver.o $(DIRECTIVES)
 	gcc $(FLAGS) arch/strings.c -o strings.o $(DIRECTIVES)
+	gcc $(FLAGS) arch/syscalls.c -o syscalls.o $(DIRECTIVES)
 	
-	ld -melf_i386 -T link.ld -o kernel.bin keys.o loader.o kernel.o asm_interrupts.o arch_hanlders.o keyboard_driver.o video_driver.o strings.o
+	ld -melf_i386 -T link.ld -o kernel.bin *.o
 	rm *.o
 	mcopy kernel.bin y:/boot -o
 clean:

@@ -19,8 +19,10 @@ GLOBAL _irq02Handler
 GLOBAL _irq03Handler
 GLOBAL _irq04Handler
 GLOBAL _irq05Handler
+GLOBAL _syscallHandler
 
 
+EXTERN syscallDispatcher
 EXTERN irqDispatcher
 EXTERN int_08
 
@@ -110,6 +112,21 @@ _irq04Handler:
 ;USB
 _irq05Handler:
 	irqHandlerMaster 5
+
+;syscalls
+_syscallHandler:
+	pusha
+	push edx
+	push ecx
+	push edx
+	push eax
+	call syscallDispatcher
+	pop eax
+	pop edx
+	pop ecx
+	pop edx
+	popa
+	iret
 
 
 int_08_hand:				; Handler de INT 8 ( Timer tick)

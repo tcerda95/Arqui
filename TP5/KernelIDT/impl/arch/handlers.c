@@ -1,8 +1,8 @@
-
 #include "types.h"
 #include "klib.h"
 #include "arch/video_driver.h"
 #include "arch/keyboard_driver.h"
+#include "arch/syscalls.h"
 
 void int_08();
 void int_09();
@@ -33,5 +33,11 @@ void int_09() {
 	if (c != -1) {
 		put_char(c);
 		j++;
+	}
+}
+
+void syscallDispatcher(dword eax, dword ebx, dword ecx, dword edx) {
+	switch (eax) {
+		case 4: sys_write(ebx,ecx,edx); break;
 	}
 }
