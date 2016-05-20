@@ -9,8 +9,11 @@ all:
 
 	gcc $(FLAGS) arch/handlers.c -o arch_hanlders.o $(DIRECTIVES)
 	gcc $(FLAGS) kernel.c -o kernel.o $(DIRECTIVES) 
+	gcc $(FLAGS) arch/keyboard_driver.c -o keyboard_driver.o $(DIRECTIVES)
+	gcc $(FLAGS) arch/video_driver.c -o video_driver.o $(DIRECTIVES)
+	gcc $(FLAGS) arch/strings.c -o strings.o $(DIRECTIVES)
 	
-	ld -melf_i386 -T link.ld -o kernel.bin keys.o loader.o kernel.o asm_interrupts.o arch_hanlders.o 
+	ld -melf_i386 -T link.ld -o kernel.bin keys.o loader.o kernel.o asm_interrupts.o arch_hanlders.o keyboard_driver.o video_driver.o strings.o
 	rm *.o
 	mcopy kernel.bin y:/boot -o
 clean:
