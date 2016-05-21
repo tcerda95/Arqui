@@ -6,6 +6,7 @@ DESCR_INT idt[0xFF];// IDT de 255 entradas
 IDTR idtr;			// IDTR
 
 void setup_IDT_entry (int index, byte selector, dword offset, byte access);
+void syscall(unsigned int scall, dword ebx, dword ecx, dword edx);
 
 /**********************************************
 kmain() 
@@ -32,6 +33,8 @@ int kmain()
 	picSlaveMask(0xFF);
         
 	_sti();
+
+	syscall(4, 1, "por fin anda", 12);
 	
 	
 	while(1){
@@ -47,6 +50,3 @@ void setup_IDT_entry (int index, byte selector, dword offset, byte access) {
   idt[index].access = access;
   idt[index].cero = 0;
 }
-
-
-

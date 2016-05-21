@@ -116,15 +116,17 @@ _irq05Handler:
 ;syscalls
 _syscallHandler:
 	pusha
+
 	push edx
 	push ecx
-	push edx
+	push ebx
 	push eax
 	call syscallDispatcher
 	pop eax
-	pop edx
+	pop ebx
 	pop ecx
 	pop edx
+
 	popa
 	iret
 

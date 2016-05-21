@@ -38,6 +38,11 @@ void int_09() {
 
 void syscallDispatcher(dword eax, dword ebx, dword ecx, dword edx) {
 	switch (eax) {
-		case 4: sys_write(ebx,ecx,edx); break;
+		case 3:
+			put("eax = 3",7);
+			break;
+		case 4: 
+			sys_write((unsigned int) ebx,(const char *) ecx,(unsigned int) edx); 
+			break;
 	}
 }
